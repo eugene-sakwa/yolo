@@ -1,10 +1,8 @@
-FROM alpine:3.19
-
-RUN apk add --no-cache nodejs npm
+FROM node:13-alpine
 
 WORKDIR /client
 
-COPY package*.json .
+COPY package.json .
 
 RUN npm install
  

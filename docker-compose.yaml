@@ -3,21 +3,26 @@ version: '3.8'
 services:
   frontend:
     build: ./client
+    stdin_open: true
+    image: client-image:v5
     ports:
       - "3000:3000"
     depends_on:
       - backend
     networks:
-      - app-network
+      - yolo-network
 
   backend:
     build: ./backend
+    image: backend-image:v2
     ports:
       - "5000:5000"
     volumes:
       - backend-data:/backend/data
     networks:
-      - app-network
+      - yolo-network
+    environment:
+      MONGODB_URI: "mongodb://mongodb:27017/yolomy"
 
   mongodb:
     image: mongo:latest
@@ -28,10 +33,11 @@ services:
     volumes:
       - mongodb_data:/data/db
     networks:
-      - app-network
+      - yolo-network
 
 networks:
-  app-network:
+  yolo-network:
+    driver: bridge
 
 volumes:
   backend-data:
