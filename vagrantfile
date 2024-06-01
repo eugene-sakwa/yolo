@@ -1,0 +1,17 @@
+Vagrant.configure("2") do |config|
+    # Use the Ubuntu 20.04 (Focal Fossa) box
+    config.vm.box = "geerlingguy/ubuntu2004"
+  
+    # Configure network settings for easy access
+    config.vm.network "private_network", type: "dhcp"
+  
+    # Provisioning with Ansible
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+      ansible.inventory_path = "inventory"
+    end
+  
+    # Optional: Sync folder for easy access and development
+    config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+  end
+  
