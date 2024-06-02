@@ -6,7 +6,6 @@
     - common
     - docker
     - docker_compose
-    - docker_service
 
 
 
