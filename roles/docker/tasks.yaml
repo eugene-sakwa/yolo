@@ -1,0 +1,28 @@
+---
+- name: Add Docker GPG key
+  apt_key:
+    url: "{{ docker_gpg_key_url }}"
+    state: present
+  tags: docker
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "{{ docker_repository }}"
+    state: present
+  tags: docker
+
+- name: Install Docker
+  apt:
+    name: "{{ docker_package }}"
+    state: present
+    update_cache: yes
+  tags: docker
+
+- name: Ensure Docker service is running
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  notify: 
+    - Restart Docker
+  tags: docker

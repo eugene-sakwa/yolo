@@ -4,17 +4,20 @@
     name: docker-compose
     state: present
     extra_args: "--ignore-installed"
+  tags: docker_compose
 
 - name: Verify Docker Compose installation
   command: docker-compose --version
+  tags: docker_compose
 
 - name: Install Docker Compose v2
   get_url:
-    url: https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64
+    url: "{{ docker_compose_v2_url }}"
     dest: /usr/local/bin/docker-compose
     mode: '0755'
   notify:
     - Restart Docker
+  tags: docker_compose
 
 - name: Use Docker Compose v2 to build and start containers
   community.docker.docker_compose_v2:
@@ -22,3 +25,4 @@
     state: present
     build: always
     remove_orphans: yes
+  tags: docker_compose
