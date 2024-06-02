@@ -43,7 +43,7 @@
     config.vm.network "private_network", type: "dhcp"
 
     # Forward port 3000 from VM to host
-    config.vm.network "forwarded_port", guest: 3000, host: 8080
+    config.vm.network "forwarded_port", guest: 3000, host: 3000
   
     # Provisioning with Ansible
     config.vm.provision "ansible" do |ansible|

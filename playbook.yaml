@@ -13,135 +13,6 @@
 #         - ca-certificates
 #         - curl
 #         - software-properties-common
-
-#     - name: Add Docker GPG key
-#       apt_key:
-#         url: https://download.docker.com/linux/ubuntu/gpg
-#         state: present
-
-#     - name: Add Docker repository
-#       apt_repository:
-#         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
-#         state: present
-
-#     - name: Install Docker
-#       apt:
-#         name: docker-ce
-#         state: present
-#         update_cache: yes
-
-#     - name: Ensure Docker service is running
-#       systemd:
-#         name: docker
-#         state: started
-#         enabled: yes
-
-#     - name: Install pip for Python 3
-#       apt:
-#         name: python3-pip
-#         state: present
-#         update_cache: yes
-
-#     - name: Upgrade urllib3 and chardet
-#       pip:
-#         name: "{{ item }}"
-#         state: latest
-#       loop:
-#         - urllib3
-#         - chardet
-
-#     - name: Install Docker Compose using pip
-#       pip:
-#         name: docker-compose
-#         state: present
-
-#     - name: Verify Docker Compose installation
-#       command: docker-compose --version
-
-#     - name: Build and start Docker containers
-#       command: docker-compose up -d
-#       args:
-#         chdir: /vagrant  # Use the full path to the directory containing your Docker Compose file
-
-# ---
-# - name: Provision and Configure VM
-#   hosts: all
-#   become: yes
-#   tasks:
-#     - name: Install dependencies
-#       apt:
-#         name: "{{ item }}"
-#         state: present
-#         update_cache: yes
-#       loop:
-#         - apt-transport-https
-#         - ca-certificates
-#         - curl
-#         - software-properties-common
-
-#     - name: Add Docker GPG key
-#       apt_key:
-#         url: https://download.docker.com/linux/ubuntu/gpg
-#         state: present
-
-#     - name: Add Docker repository
-#       apt_repository:
-#         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
-#         state: present
-
-#     - name: Install Docker
-#       apt:
-#         name: docker-ce
-#         state: present
-#         update_cache: yes
-
-#     - name: Ensure Docker service is running
-#       systemd:
-#         name: docker
-#         state: started
-#         enabled: yes
-
-#     - name: Install pip for Python 3
-#       apt:
-#         name: python3-pip
-#         state: present
-#         update_cache: yes
-
-#     - name: Install Docker Compose using pip
-#       pip:
-#         name: docker-compose
-#         state: present
-
-#     - name: Install specific version of requests and urllib3
-#       pip:
-#         name: 
-#           - requests==2.25.1
-#           - urllib3==1.26.5
-#         state: present
-
-#     - name: Verify Docker Compose installation
-#       command: docker-compose --version
-
-#     - name: Build and start Docker containers
-#       command: docker-compose up -d
-#       args:
-#         chdir: /vagrant
-
-# ---
-# - name: Provision and Configure VM
-#   hosts: all
-#   become: yes
-#   tasks:
-#     - name: Install dependencies
-#       apt:
-#         name: "{{ item }}"
-#         state: present
-#         update_cache: yes
-#       loop:
-#         - apt-transport-https
-#         - ca-certificates
-#         - curl
-#         - software-properties-common
 #         - python3-pip
 #         - libffi-dev
 #         - libssl-dev
@@ -168,93 +39,43 @@
 #         state: started
 #         enabled: yes
 
-#     - name: Install Docker Compose from GitHub
-#       get_url:
-#         url: https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-$(uname -s)-$(uname -m)
-#         dest: /usr/local/bin/docker-compose
-#         mode: '0755'
-
-#     - name: Install specific versions of requests and urllib3
+#     - name: Install Docker Compose using pip
 #       pip:
-#         name: 
-#           - requests==2.25.1
-#           - urllib3==1.26.5
+#         name: docker-compose
 #         state: present
+#         extra_args: "--ignore-installed"
 
 #     - name: Verify Docker Compose installation
 #       command: docker-compose --version
 
-#     - name: Build and start Docker containers
-#       command: docker-compose up -d
-#       args:
-#         chdir: /vagrant
+#     - name: Install Docker Compose v2
+#       get_url:
+#         url: https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64
+#         dest: /usr/local/bin/docker-compose
+#         mode: '0755'
+#       notify:
+#         - Restart Docker
+
+#     - name: Use Docker Compose v2 to build and start containers
+#       community.docker.docker_compose_v2:
+#         project_src: /vagrant
+#         state: present
+#         build: always
+#         remove_orphans: yes
+
+#   handlers:
+#     - name: Restart Docker
+#       systemd:
+#         name: docker
+#         state: restarted
+
 ---
 - name: Provision and Configure VM
   hosts: all
   become: yes
-  tasks:
-    - name: Install dependencies
-      apt:
-        name: "{{ item }}"
-        state: present
-        update_cache: yes
-      loop:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
-        - python3-pip
-        - libffi-dev
-        - libssl-dev
 
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Add Docker repository
-      apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
-        state: present
-
-    - name: Install Docker
-      apt:
-        name: docker-ce
-        state: present
-        update_cache: yes
-
-    - name: Ensure Docker service is running
-      systemd:
-        name: docker
-        state: started
-        enabled: yes
-
-    - name: Install Docker Compose using pip
-      pip:
-        name: docker-compose
-        state: present
-        extra_args: "--ignore-installed"
-
-    - name: Verify Docker Compose installation
-      command: docker-compose --version
-
-    - name: Install Docker Compose v2
-      get_url:
-        url: https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64
-        dest: /usr/local/bin/docker-compose
-        mode: '0755'
-      notify:
-        - Restart Docker
-
-    - name: Use Docker Compose v2 to build and start containers
-      community.docker.docker_compose_v2:
-        project_src: /vagrant
-        state: present
-        build: always
-        remove_orphans: yes
-
-  handlers:
-    - name: Restart Docker
-      systemd:
-        name: docker
-        state: restarted
+  roles:
+    - { role: common, tags: ['common'] }
+    - { role: docker, tags: ['docker'] }
+    - { role: docker_service, tags: ['docker_service'] }
+    - { role: docker_compose, tags: ['docker_compose'] }
