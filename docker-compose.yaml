@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2.2'
 
 services:
   frontend:
@@ -14,7 +14,7 @@ services:
 
   backend:
     build: ./backend
-    image: backend-image:v2
+    image: my-test-app:latest
     ports:
       - "5000:5000"
     volumes:

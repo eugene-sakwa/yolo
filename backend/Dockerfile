@@ -1,6 +1,7 @@
 FROM node:16-alpine
 
-RUN apk add --no-cache mongodb-tools
+RUN apk add --no-cache krb5-libs mongodb-tools
+# RUN apk add --no-cache mongodb-tools
 
 WORKDIR /backend
 
