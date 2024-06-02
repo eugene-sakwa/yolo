@@ -35,3 +35,24 @@ The `docker_compose` module was utilized for managing Docker Compose configurati
 
 ## Conclusion
 The chosen approach leveraged Vagrant and Ansible for automating the setup of the development environment, while the `docker_compose` module facilitated the management of Docker Compose projects. By organizing the project into roles and utilizing the appropriate Ansible modules, the implementation is modular, maintainable, and scalable.
+
+
+## Stage Two Implementation Approach
+
+### Project Structure
+- **Branch Checkout:** Checkout into a branch named "Stage_two".
+- **Directory Creation:** Within "stage-1-Ansible-root", create a new directory named "Stage_two".
+- **Folder Structure:** The "Stage_two" directory will mirror the parent folder structure with an added "terraform" folder.
+
+### Terraform and Ansible Integration
+- **Terraform Scripts:** Develop Terraform scripts to provision resources like virtual machines and networks.
+- **Ansible Playbook:** Implement an Ansible playbook triggering both Terraform resource provisioning and server configuration.
+- **Integration Strategies:** Utilize Ansible's `community.general.terraform` module or Terraform's `remote-exec` provisioner for Ansible script execution.
+
+### Best Practices
+- **Variable Usage:** Employ variables extensively for flexibility and maintainability.
+- **Modularization:** Modularize Terraform scripts for reusability and scalability.
+- **Documentation:** Provide comprehensive documentation for scripts, detailing purpose, usage, and dependencies.
+
+### Conclusion
+By seamlessly integrating Terraform and Ansible, we can automate environment setup efficiently, ensuring consistency and scalability while adhering to infrastructure as code (IaC) principles.
