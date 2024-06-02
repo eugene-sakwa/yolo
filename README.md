@@ -1,4 +1,58 @@
-# YOLO
+# Yolomy
+
+## Overview
+
+This repository contains the code for Yolomy, an e-commerce website and dashboard application.
+
+## Setup Instructions
+
+### Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+- [VirtualBox](https://www.virtualbox.org/)
+- [Vagrant](https://www.vagrantup.com/)
+
+### Installation
+
+1. **Fork the Repository**: Click the "Fork" button in the top-right corner of this repository's page to create your own copy of the repository.
+
+2. **Clone the Repository**: Clone your fork of the repository to your local machine using the following command:
+
+   ```bash
+   git clone https://github.com/eugene-sakwa/yolo.git
+   ```
+
+3. **Install Necessary Tools**: Ensure that VirtualBox and Vagrant are installed on your system. You can download and install them from their official websites ([VirtualBox](https://www.virtualbox.org/), [Vagrant](https://www.vagrantup.com/)).
+
+### Running the Application
+
+To run the application locally, follow these steps:
+
+1. **Navigate to the Project Directory**: Change into the directory of the cloned repository using the `cd` command:
+
+   ```bash
+   cd yolo
+   ```
+
+2. **Start the Vagrant Environment**: Use the following command to start the Vagrant virtual machine:
+
+   ```bash
+   vagrant up
+   ```
+
+3. **Access the Application**: Once the Vagrant machine is up and running, you can access the application by opening a web browser and navigating to [http://localhost:3000](http://localhost:3000).
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
+
+
+<!-- # YOLO
 
 The YOLO application is an e-commerce website that doubles as a dashboard where you can load retail products onto the site.
 
@@ -46,3 +100,7 @@ You can access the app in your web browser at http://localhost:3000.
 
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+ -->
+
+
