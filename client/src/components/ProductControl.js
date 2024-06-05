@@ -5,6 +5,7 @@ import NewProductForm from './NewProductForm';
 import ProductDetail from './ProductDetail';
 import AddProduct from './AddProduct';
 import EditProductForm from './EditProductForm';
+const BACKEND_API_URL = window.location.origin;
 // import tshirt from '../images/products/tshirt.png';
 // import backpack from '../images/products/backpack.png';
 // import pants from '../images/products/pants.png';
@@ -78,7 +79,7 @@ class ProductControl extends Component {
     }
     
     componentDidMount(){
-        axios.get('http://localhost:5000/api/products')
+        axios.get(`${BACKEND_API_URL}/api/products`,)
             .then(res =>{
                 console.log(res)
                 this.setState({
